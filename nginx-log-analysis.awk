@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 # by zhenglingyun(konghuarukhr@163.com), 2016-06-23
 
-# example: cat access.log | sed -r 's/^.*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4/p' | awk '{print $1,$4,$2,$3}' | ./this-program.awk
+# example: cat access.log | sed -nr 's/^.*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4/p' | awk '{print $1,$4,$2,$3}' | ./this-program.awk
 # this awk program needs input format:
 # when                 cost  code byte
 # 23/Jun/2016:00:01:03 0.040 200  15322
