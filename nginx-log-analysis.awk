@@ -2,9 +2,10 @@
 # by zhenglingyun(konghuarukhr@163.com), 2016-06-23
 
 # example: cat access.log | sed -nr 's/^.*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4/p' | awk '{print $1,$4,$2,$3}' | ./this-program.awk
+# example: cat access.log | sed -nr 's/^([0-9.]+) .*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4 \5/p' | awk '{print $2,$5,$3,$4,$1}' | ./this-program.awk
 # this awk program needs input format:
-# when                 cost  code byte
-# 23/Jun/2016:00:01:03 0.040 200  15322
+# when                 cost  code byte  other1  other2...
+# 23/Jun/2016:00:01:03 0.040 200  15322 1.1.1.1 XXX
 # 'when' precision is up to you, can be second, minute, or hour
 
 function reverse(array, size) {
@@ -24,6 +25,9 @@ BEGIN {
     cost = $2
     code = $3
     byte = $4
+    for (i = 5; i <= NF; i++) {
+        others[i,$i]++
+    }
 
     codes[code]++
     bytes[byte]++
@@ -70,4 +74,13 @@ END {
         printf "code: %s, count: %d\n", code, codes[code]
     }
     printf "--------------------------\n"
+    num = asorti(others, sorted_others)
+    if (num > 0) {
+        for (i = 1; i <= num; i++) {
+            key = sorted_others[i]
+            split(key, arr, SUBSEP)
+            printf "key: %s, count: %d\n", arr[2], others[key]
+        }
+        printf "--------------------------\n"
+    }
 }
