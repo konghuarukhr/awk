@@ -2,9 +2,10 @@
 awk scripts collection
 
 ## nginx-log-analysis.awk
-* usage: `cat access.log | sed -nr 's/^.*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4/p' | awk '{print $1,$4,$2,$3}' | ~/nginx-log-analysis.awk`
-* usage: `cat access.log | sed -nr 's/^([0-9.]+) .*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4 \5/p' | awk '{print $2,$5,$3,$4,$1}' | ~/nginx-log-analysis.awk`
-* example:
+usage:  
+`cat access.log | sed -nr 's/^.*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4/p' | awk '{print $1,$4,$2,$3}' | ~/nginx-log-analysis.awk`  
+`cat access.log | sed -nr 's/^([0-9.]+) .*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4 \5/p' | awk '{print $2,$5,$3,$4,$1}' | ~/nginx-log-analysis.awk`  
+example:  
 > [zhenglingyun@bjzw-datacenter-hadoop-60 logs]$ time grep '24/Jun/2016.*product?' search.access.log | sed -nr 's/^([0-9.]+) .*\[(.*):..:.. \+.*HTTP\/1\.." ([0-9]+) ([0-9]+) .*"(.*)"$/\1 \2 \3 \4 \5/p' | awk '{print $2,$5,$3,$4,$1}' | ~/nginx-log-analysis.awk
 > --------------------------
 > segment: 24/Jun/2016:00, count: 12609, avg_costs: 0.090058
